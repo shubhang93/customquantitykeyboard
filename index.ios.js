@@ -6,12 +6,12 @@
 
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
-
+import CustomQuantityKeyboard from './CustomQuantityKeyboard/CustomQuantityKeyboard';
 export default class customquantitykeyboard extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>React Native</Text>
+        <CustomQuantityKeyboard />
       </View>
     );
   }
