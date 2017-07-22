@@ -10,6 +10,8 @@ class InputRefsTest extends Component {
   constructor(props) {
     super(props);
     this._inputNodes = new Map();
+    this._currentlySelectedInputNode = undefined;
+    this._inputValue = '';
     this.state = {
       text: '',
       prevFocusedInputId: undefined,
@@ -23,22 +25,36 @@ class InputRefsTest extends Component {
     if (!id) return false;
     let InputNode = this._inputNodes.get(id);
     InputNode.setNativeProps({ style: { borderColor: 'black' } });
+    InputNode.blur();
   };
 
   _dismissKeyboardOnFocus = id => {
+    this._currentlySelectedInputNode = id;
     Keyboard.dismiss();
     this.setState(prevState => ({
       ...prevState,
       showKeyboard: true,
     }));
+    this._inputValue = '';
     let { prevFocusedInputId } = this.state;
     this._deselectPreviouslyFocusedInputNode(prevFocusedInputId);
     let InputNodeFocused = this._inputNodes.get(id);
+    console.log({ InputNodeFocused });
     InputNodeFocused.setNativeProps({
       text: '',
       style: { borderColor: 'blue' },
     });
     this.setState({ prevFocusedInputId: id });
+  };
+
+  _handleTextInputChange = value => {
+    let tempInputString = this._inputValue.concat(`${value}`);
+    let truncatedTempInputString = tempInputString.slice(0, 3);
+    let InputFocused = this._inputNodes.get(this._currentlySelectedInputNode);
+    this._inputValue = truncatedTempInputString;
+    InputFocused.setNativeProps({
+      text: truncatedTempInputString,
+    });
   };
 
   render() {
@@ -59,7 +75,7 @@ class InputRefsTest extends Component {
 
         <CustomQuantityKeyboard
           showKeyboard={this.state.showKeyboard}
-          onPress={value => console.log({ value })}
+          onPress={value => this._handleTextInputChange(value)}
         />
       </View>
     );
