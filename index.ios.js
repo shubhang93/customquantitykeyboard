@@ -7,11 +7,12 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 import CustomQuantityKeyboard from './CustomQuantityKeyboard/CustomQuantityKeyboard';
+import InputRefsTest from './CustomQuantityKeyboard/InputRefsTest';
 export default class customquantitykeyboard extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <CustomQuantityKeyboard />
+        <InputRefsTest/>
       </View>
     );
   }
@@ -19,7 +20,8 @@ export default class customquantitykeyboard extends Component {
 
 const styles = {
   container: {
-    paddingTop: 200,
+    paddingTop: 50,
+    flex: 1,
   },
 };
 
